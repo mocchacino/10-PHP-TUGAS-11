@@ -18,10 +18,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/getData','Karyawan@getData');
-Route::get('/getData',[Karyawan::class, 'getData']);
-Route::get('/detDetail/{id}',[Karyawan::class, 'detDetail']);
-// Route::post('/pushData',[Karyawan::class, 'store']);
-Route::post('/pushData',[Karyawan::class,'store']);
-Route::post('/setData',[Karyawan::class,'update']);
-Route::get('/delete/{id}',[Karyawan::class,'hapus']);
+// // Route::get('/getData','Karyawan@getData');
+// Route::get('/getData',[Karyawan::class, 'getData']);
+// Route::get('/detDetail/{id}',[Karyawan::class, 'detDetail']);
+// // Route::post('/pushData',[Karyawan::class, 'store']);
+// Route::post('/pushData',[Karyawan::class,'store']);
+// Route::post('/setData',[Karyawan::class,'update']);
+// Route::get('/delete/{id}',[Karyawan::class,'hapus']);

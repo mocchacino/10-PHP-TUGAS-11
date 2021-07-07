@@ -23,10 +23,10 @@ class Karyawan extends Controller
 
     public function store(Request $request){
         $this->validate($request, [
-            'file' => 'required|max:2048'
+            'foto' => 'required|max:2048'
         ]);
         // menyimpan file yang diupload ke dalam $file
-        $file = $request->file('file');
+        $file = $request->file('foto');
         $nama_file = time()."_".$file->getClientOriginalName();
         // isi dengan nama folder tempat kemana file diupload
         $tujuan_upload = 'data_file';
@@ -36,7 +36,7 @@ class Karyawan extends Controller
                 'jabatan' => $request->jabatan,
                 'umur' => $request->umur,
                 'alamat' => $request->alamat,
-                'foto' => $nama_file,
+                'foto' => $nama_file
             ]);
             $resp['message'] = "Success!";
             $resp['values'] = $data;
@@ -48,12 +48,12 @@ class Karyawan extends Controller
     }
 
     public function update(Request $request){
-        if(!empty($request->file)){
+        if(!empty($request->foto)){
             $this->validate($request, [
-                'file' => 'required|max2048'
+                'foto' => 'required|max2048'
             ]);
             //menyimpan data file yang diupload ke variable $file
-            $file = $request->file('file');
+            $file = $request->file('foto');
             $nama_file = time()."_".$file->getClientOriginalName();
 
             //isi dengan nama folder tempat kemana file diupload
@@ -61,7 +61,7 @@ class Karyawan extends Controller
             $file->move($tujuan_upload, $nama_file);
             $data = DB::table('tbl_karyawan')->where('id',$id)->get();
             foreach($data as $karyawan){
-                @unlink(public_path('data_file/'.$karyawan->gambar));
+                @unlink(public_path('data_file/'.$karyawan->foto));
                 $ket = DB::table('tbl_karyawan')->where('id',$request->id)->update([
                     'nama' => $request->nama,
                     'jabatan' => $request->jabatan,
@@ -92,10 +92,10 @@ class Karyawan extends Controller
 
 
     public function hapus($id){
-        $data = DB::table('tbl_karyawan')->where('id',$request->id)->get();
+        $data = DB::table('tbl_karyawan')->where('id',$id)->get();
         foreach($data as $karyawan){
-            if(file_exists(public_path('data_file/'.$karyawan->gambar))){
-                @unlink(public_path('data_file/'.$karyawan->gambar));
+            if(file_exists(public_path('data_file/'.$karyawan->foto))){
+                @unlink(public_path('data_file/'.$karyawan->foto));
                 DB::table('tbl_karyawan')->where('id', $id)->delete();
                 $res['message'] = 'Success!';
                 return response($res);
@@ -109,7 +109,6 @@ class Karyawan extends Controller
 
     public function getDetail($id){
         $data = DB::table('tbl_karyawan')->where('id',$id)->get();
-        $data = DB::table('tbl_karyawan')->get();
         if(count($data) > 0){
             $res['message'] = "Success!";
             $res['value'] = $data;

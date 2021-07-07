@@ -19,7 +19,7 @@ class TblKaryawan extends Migration
             $table->string('jabatan');
             $table->integer('umur');
             $table->string('alamat');
-            $table->integer('foto');
+            $table->string('foto');
         });
     }
 
